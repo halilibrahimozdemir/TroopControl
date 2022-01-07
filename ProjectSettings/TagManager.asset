@@ -12,10 +12,10 @@ TagManager:
   - 
   - Water
   - UI
-  - Player
-  - 
-  - 
-  - 
+  - Unit
+  - Ground
+  - Target
+  - Wall
   - 
   - 
   - 

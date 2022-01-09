@@ -9,7 +9,11 @@ public class MultipleSelectBox : MonoBehaviour
 
     [SerializeField]private Vector3 _startPos;
     private Vector3 _endPos;
-    
+
+    private GameManager _gameManager;
+
+    private Vector3 _mousePos1;
+    private Vector3 _mousePos2;
     void Start()
     {
         _selectSquareImage.gameObject.SetActive(false);
@@ -22,12 +26,20 @@ public class MultipleSelectBox : MonoBehaviour
         if (Input.GetMouseButtonUp(1))
         {
             _selectSquareImage.gameObject.SetActive(false);
+            _mousePos2 = Camera.main.ScreenToViewportPoint(Input.mousePosition);
+
+            if (_mousePos1 != _mousePos2)
+            {
+                SelectUnits();
+            }
         }
         
         if (Input.GetMouseButtonDown(1))
         {
+            _mousePos1 = Camera.main.ScreenToViewportPoint(Input.mousePosition);
+            
             RaycastHit hit;
-
+            
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity))
             {
                 _startPos = hit.point;
@@ -54,5 +66,23 @@ public class MultipleSelectBox : MonoBehaviour
 
             _selectSquareImage.sizeDelta = new Vector2(sizeX, sizeY);
         }
+    }
+    
+    private void SelectUnits()
+    {
+        //Null hale gelen veya silinen unitleri temizlemek için
+        List<UnitController> remUnits = new List<UnitController>();
+
+        if (!Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.RightShift))
+        {
+            _gameManager.SelectedUnits.Clear();
+        }
+        
+        
+    }
+
+    private void ClearSelection()
+    {
+        
     }
 }

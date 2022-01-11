@@ -10,8 +10,6 @@ public class UnitOptions : MonoBehaviour
 
     [SerializeField] private GameManager _gameManager;
 
-    [SerializeField] private Text unitName;
-
     [SerializeField] private GameObject _unitOptions;
     [SerializeField] private Slider _speedSlider;
     [SerializeField] private Slider _stoppingDistanceSlider;

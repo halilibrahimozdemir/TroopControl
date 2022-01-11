@@ -10,10 +10,9 @@ public class UnitController : MonoBehaviour
     public Transform target;
     public LayerMask targetLayerMask;
     [SerializeField] private GameManager _gameManager;
+    
     void Update()
     {
-        
-
         if (target)
         {
             agent.SetDestination(target.position);

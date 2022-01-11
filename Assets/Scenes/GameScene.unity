@@ -1419,6 +1419,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _selectSquareImage: {fileID: 722753759}
+  _startPos: {x: 0, y: 0, z: 0}
+  _gameManager: {fileID: 1897659167}
+  _selectableUnits: []
 --- !u!1 &967963203
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,7 +13,6 @@ public class GameManager : MonoBehaviour
    //    get => _selectedUnit;
    //    set => _selectedUnit = value;
    // }
-   
    public List<UnitController> SelectedUnits
    {
       get => _selectedUnits;
@@ -21,6 +20,12 @@ public class GameManager : MonoBehaviour
    }
 
    [SerializeField]private new Camera camera;
+
+   private void Awake()
+   {
+      //_selectedUnits = new List<UnitController>();
+   }
+
    private void Update()
    {
       //Sol tıklandığında

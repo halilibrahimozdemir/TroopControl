@@ -10,13 +10,16 @@ public class MultipleSelectBox : MonoBehaviour
     [SerializeField]private Vector3 _startPos;
     private Vector3 _endPos;
 
-    private GameManager _gameManager;
+    [SerializeField]private GameManager _gameManager;
 
     private Vector3 _mousePos1;
     private Vector3 _mousePos2;
+
+    [SerializeField]private UnitController[] _selectableUnits;
     void Start()
     {
         _selectSquareImage.gameObject.SetActive(false);
+        _selectableUnits = GameObject.FindObjectsOfType<UnitController>();
     }
 
     // Update is called once per frame
@@ -75,7 +78,52 @@ public class MultipleSelectBox : MonoBehaviour
 
         if (!Input.GetKey(KeyCode.LeftShift) && !Input.GetKey(KeyCode.RightShift))
         {
-            _gameManager.SelectedUnits.Clear();
+            if (_gameManager.SelectedUnits != null)
+            {
+                Debug.Log("shifte basılmadığı için seçim varsa iptal edildi");
+                _gameManager.SelectedUnits.Clear();
+            }
+
+            Rect selectRect = new Rect(_mousePos1.x, _mousePos1.y, _mousePos2.x-_mousePos1.x,
+                _mousePos2.y-_mousePos1.y);
+
+            foreach (var selectableUnit in _selectableUnits)
+            {
+                if (selectRect.Contains(Camera.main.WorldToViewportPoint(selectableUnit.transform.position), true))
+                {
+                    if (_gameManager.SelectedUnits != null)
+                    {
+                        _gameManager.SelectedUnits.Add(selectableUnit);
+                    }
+                    else
+                    {
+                        Debug.Log("selectedUnits listesi null");
+                    }
+                } 
+            }
+        }
+        else
+        {
+            Rect selectRect = new Rect(_mousePos1.x, _mousePos1.y, _mousePos2.x-_mousePos1.x,
+                _mousePos2.y-_mousePos1.y);
+
+            foreach (var selectableUnit in _selectableUnits)
+            {
+                if (selectRect.Contains(Camera.main.WorldToViewportPoint(selectableUnit.transform.position), true))
+                {
+                    if (_gameManager.SelectedUnits != null)
+                    {
+                        if (!_gameManager.SelectedUnits.Contains(selectableUnit))
+                        {
+                            _gameManager.SelectedUnits.Add(selectableUnit); 
+                        }
+                    }
+                    else
+                    {
+                        Debug.Log("selectedUnits listesi null");
+                    }
+                } 
+            }
         }
         
         

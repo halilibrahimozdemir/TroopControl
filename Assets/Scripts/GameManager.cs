@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
                }
             }
             //Hedefe değil de başka bir yere tıklandıysa ya da seçilmiş birimimiz yoksa
-            else
+            else if(hit.transform.gameObject.layer!=LayerMask.NameToLayer("UI"))
             {
                Debug.Log("seçim iptal edildi ya da birim seçmedin");
                if (_selectedUnits != null) _selectedUnits.Clear();

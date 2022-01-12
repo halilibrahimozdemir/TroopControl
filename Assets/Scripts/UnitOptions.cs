@@ -58,7 +58,6 @@ public class UnitOptions : MonoBehaviour
             {
                 _displayWindow.SetActive(false);
             }
-            unitName.text = selectedUnits[0].name; 
         }
         else
         {

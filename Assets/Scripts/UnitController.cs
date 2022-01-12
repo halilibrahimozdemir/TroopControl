@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,9 +9,15 @@ public class UnitController : MonoBehaviour
     public Camera cam;
     public NavMeshAgent agent;
     public Transform target;
-    public LayerMask targetLayerMask;
+    public string type;
     [SerializeField] private GameManager _gameManager;
-    
+
+    private void Start()
+    {
+        cam=Camera.main;
+        _gameManager = GameObject.FindObjectOfType<GameManager>();
+    }
+
     void Update()
     {
         if (target)

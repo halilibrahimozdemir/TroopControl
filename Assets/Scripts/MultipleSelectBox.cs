@@ -16,6 +16,8 @@ public class MultipleSelectBox : MonoBehaviour
     private Vector3 _mousePos2;
 
     [SerializeField]private UnitController[] _selectableUnits;
+
+    private float _timePassed;
     void Start()
     {
         _selectSquareImage.gameObject.SetActive(false);
@@ -28,6 +30,7 @@ public class MultipleSelectBox : MonoBehaviour
         
         if (Input.GetMouseButtonUp(1))
         {
+            _timePassed = 0f;
             _selectSquareImage.gameObject.SetActive(false);
             _mousePos2 = Camera.main.ScreenToViewportPoint(Input.mousePosition);
 
@@ -39,6 +42,7 @@ public class MultipleSelectBox : MonoBehaviour
         
         if (Input.GetMouseButtonDown(1))
         {
+            _timePassed = 0f;
             _mousePos1 = Camera.main.ScreenToViewportPoint(Input.mousePosition);
             
             RaycastHit hit;
@@ -50,7 +54,8 @@ public class MultipleSelectBox : MonoBehaviour
         }
         else if (Input.GetMouseButton(1))
         {
-            if (!_selectSquareImage.gameObject.activeInHierarchy)
+            _timePassed += Time.fixedDeltaTime;
+            if (!_selectSquareImage.gameObject.activeInHierarchy && _timePassed>=0.2f)
             {
                 _selectSquareImage.gameObject.SetActive(true);
             }

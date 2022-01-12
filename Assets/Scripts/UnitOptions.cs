@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
@@ -18,6 +19,10 @@ public class UnitOptions : MonoBehaviour
     [SerializeField] private Text _minStoppingValue;
     [SerializeField] private Text _maxStoppingValue;
 
+    [SerializeField] private GameObject _displaySelectedSoldiers;
+    [SerializeField] private GameObject _displaySelectedElites;
+    [SerializeField] private Text _displaySelectedSoldiersQuantity;
+    [SerializeField] private Text _displaySelectedElitesQuantity;
     [SerializeField] private GameObject _displayWindow;
     [SerializeField] private Text _displayUnitName;
     [SerializeField] private Text _displayUnitSpeed;
@@ -31,6 +36,8 @@ public class UnitOptions : MonoBehaviour
         _maxStoppingValue.text = _stoppingDistanceSlider.maxValue.ToString();
         _displayWindow.SetActive(false);
         _unitOptions.SetActive(false);
+        _displaySelectedSoldiers.SetActive(false);
+        _displaySelectedElites.SetActive(false);
         selectedUnits = _gameManager.SelectedUnits;
     }
 
@@ -40,6 +47,44 @@ public class UnitOptions : MonoBehaviour
         selectedUnits = _gameManager.SelectedUnits;
         if (selectedUnits.Count>=1)
         {
+            int soldiersQuantity = 0;
+            int elitesQuantity = 0;
+            foreach (var selectedUnit in selectedUnits)
+            {
+                if (selectedUnit.type == "Soldier")
+                {
+                    soldiersQuantity++;
+                }else if (selectedUnit.type == "Elite")
+                {
+                    elitesQuantity++;
+                }
+                else
+                {
+                    Debug.Log("Unity Type Hatası");
+                }
+            }
+
+            if (soldiersQuantity > 0)
+            {
+                _displaySelectedSoldiers.SetActive(true);
+                _displaySelectedSoldiersQuantity.text = soldiersQuantity.ToString();
+            }
+            else
+            {
+                _displaySelectedSoldiers.SetActive(false);
+            }
+
+            if (elitesQuantity > 0)
+            {
+                _displaySelectedElites.SetActive(true);
+                _displaySelectedElitesQuantity.text = elitesQuantity.ToString();
+            }
+            else
+            {
+                _displaySelectedElites.SetActive(false);
+            }
+
+
             if (!_unitOptions.activeInHierarchy)
             {
                 _unitOptions.SetActive(true);
@@ -62,6 +107,8 @@ public class UnitOptions : MonoBehaviour
         else
         {
             _unitOptions.SetActive(false);
+            _displaySelectedElites.SetActive(false);
+            _displaySelectedSoldiers.SetActive(false);
         }
     }
 
